@@ -19,37 +19,49 @@ tbd
 <table>
 <tr>
     <th style="text-align:left;"> 
-    Überschrift Text
+    -
     </th>
     <th style="text-align:left;">
-    Überschrift Text
+    multimodales Klassifikationssystem 1
     </th>
     <th style="text-align:left;">
-    Überschrift Text
+    multimodales Klassifikationssystem 2
     </th>
 </tr> 
 
 <tr>
     <th style="text-align:left;"> 
-    Text
+    Ergebnisse
     </th>
     <th style="text-align:left;">
-    Text
+    Text 1
     </th>
     <th style="text-align:left;">
-    Text
+    Text 2
     </th>
 </tr>
 
 <tr>
     <th style="text-align:left;"> 
-    Text
+    Vorteile
     </th>
     <th style="text-align:left;">
-    Text
+    Text 3
     </th>
     <th style="text-align:left;">
-    Text
+    Text 4
+    </th>
+</tr>
+
+<tr>
+    <th style="text-align:left;"> 
+    Nachteile
+    </th>
+    <th style="text-align:left;">
+    Text 5
+    </th>
+    <th style="text-align:left;">
+    Text 6
     </th>
 </tr>
 
@@ -59,6 +71,10 @@ tbd
 tbd
 
 ## Aufgabenstellung
+
+Implementieren Sie ein multimodales Klassifikationssystem mit mindestens zwei der in der Vorle-
+sung behandelten Fusionsmethoden. Vergleichen Sie die Methoden experimentell und dokumentieren
+Sie Ihre Ergebnisse im Code-Repository. \
 Ausführlich in [Section File](#aufgabenstellung-file)
 
 ### Todo Liste
@@ -86,7 +102,25 @@ Ausführlich in [Section File](#aufgabenstellung-file)
 
 
 ## Planung
-Text
+````mermaid
+---
+config:
+  theme: 'default'
+---
+classDiagram
+    class ExtractFeatures{
+    }
+    
+    class Train{
+        
+    }
+    
+    class main{
+    }
+    
+    ExtractFeatures --> main
+    Train --> main
+````
 
 ## Shell Commands
 
