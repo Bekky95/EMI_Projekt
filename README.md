@@ -67,6 +67,7 @@ Ausführlich in [Section File](#aufgabenstellung-file)
 - [ ] Diskussion in Readme schreiben
 
 ### Aufgabenstellung File
+
 <img src="./data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-1.png">
 
 <img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-2.png">
