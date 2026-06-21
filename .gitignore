@@ -1,2 +1,3 @@
 /.venv
-/data/dataset/
+/data/dataset/memotion_dataset_7k
+/.idea
