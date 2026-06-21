@@ -22,10 +22,10 @@ tbd
     -
     </th>
     <th style="text-align:left;">
-    multimodales Klassifikationssystem 1
+    Cross-Attention
     </th>
     <th style="text-align:left;">
-    multimodales Klassifikationssystem 2
+    Early Fusion
     </th>
 </tr> 
 
