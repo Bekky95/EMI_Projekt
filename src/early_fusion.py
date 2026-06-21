@@ -15,3 +15,4 @@ class EarlyFusion(nn.Module):
 
     def forward(self, h_a, h_v):
         z = torch.cat([self.norm_a(h_a), self.norm_v(h_v)], dim=-1)
+        return self.head(z)
