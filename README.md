@@ -9,6 +9,7 @@
   - [Aufgabenstellung File](#aufgabenstellung-file)
 - [Planung](#planung)
 - [Shell Commands](#shell-commands)
+- [Notizen](#notizen)
 
 ## Setup
 tbd 
@@ -135,3 +136,9 @@ python3 -m venv .venv
 #activate virtual enviroment:
 source .venv/bin/activate
 ````
+
+## Notizen
+[Link zu kompletter file](https://drive.google.com/file/d/1EV2VbuiWD4vl9lH4-UF3MYNqR8OsZ8pY/view?usp=drive_link)
+
+<img src="./data/KIM_Notes.png">
+

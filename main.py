@@ -13,4 +13,5 @@ from transformers import Wav2Vec2Model, Wav2Vec2FeatureExtractor
 # Early Fusion (Konkatenation, optional mit Projektion auf gemeinsame Dimension)
 
 if __name__ == "__main__":
-    print("main")
+    text_model_name = "sentence-transformers/all-MiniLM-L6-v2"
+    bild_model_name = "openai/clip-vit-base-patch32"
