@@ -1,5 +1,7 @@
-import torch, torchaudio, numpy as np
-from transformers import Wav2Vec2Model, Wav2Vec2FeatureExtractor
+import torch
+import torchaudio
+import numpy as np
+from transformers import AutoTokenizer, AutoModel, AutoProcessor, AutoModelForZeroShotImageClassification
 
 #TODO: pretrained Models
 # Text sentence-transformers/all-MiniLM-L6-v2 384
@@ -13,5 +15,17 @@ from transformers import Wav2Vec2Model, Wav2Vec2FeatureExtractor
 # Early Fusion (Konkatenation, optional mit Projektion auf gemeinsame Dimension)
 
 if __name__ == "__main__":
+    # https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
     text_model_name = "sentence-transformers/all-MiniLM-L6-v2"
-    bild_model_name = "openai/clip-vit-base-patch32"
+    # https://huggingface.co/openai/clip-vit-base-patch32?library=transformers
+    image_model_name = "openai/clip-vit-base-patch32"
+
+    #text_tokenizer = AutoTokenizer.from_pretrained(text_model_name)
+    text_model = AutoModel.from_pretrained(text_model_name)
+
+    image_processor = AutoProcessor.from_pretrained(image_model_name)
+    image_model = AutoModelForZeroShotImageClassification.from_pretrained(image_model_name)
+
+    # long_text = "This is a very long text. " * 100
+    # inputs = text_tokenizer(long_text, truncation=True, max_length=128)
+    # print(inputs)
