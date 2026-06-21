@@ -85,21 +85,21 @@ Ausführlich in [Section File](#aufgabenstellung-file)
 
 ### Aufgabenstellung File
 
-<img src="./data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-1.png">
+<img src="data/images/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-1.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-2.png">
+<img src="data/images/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-2.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-3.png">
+<img src="data/images/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-3.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-4.png">
+<img src="data/images/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-4.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-5.png">
+<img src="data/images/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-5.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-6.png">
+<img src="data/images/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-6.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-7.png">
+<img src="data/images/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-7.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-8.png">
+<img src="data/images/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-8.png">
 
 
 ## Planung
@@ -140,5 +140,5 @@ source .venv/bin/activate
 ## Notizen
 [Link zu kompletter file](https://drive.google.com/file/d/1EV2VbuiWD4vl9lH4-UF3MYNqR8OsZ8pY/view?usp=drive_link)
 
-<img src="./data/KIM_Notes.png">
+<img src="data/images/KIM_Notes.png">
 
