@@ -1,52 +1,40 @@
-# import mlcroissant as mlc
-# import tensorflow_datasets as tfds
-# import json
-#
-# # class ExtractFeatures:
-# #     def __init__(self):
-# #         pass
-# #
-# #     def extract_text_embeddings(self):
-# #         pass
-# #
-# #     def extract_image_embeddings(self):
-# #         pass
-# #
-# #     def save_embeddings(self):
-# #         pass
-#
-# if __name__ == "__main__":
-#
-#     memetion_url = "https://huggingface.co/api/datasets/AshuReddy/memetion_dataset_7k/croissant"
-#
-#     # with open("../data/memetion_metadata.json", "w", encoding="utf-8") as f:
-#     #     json.dump(ds.metadata.to_json(), f, indent=2, ensure_ascii=False)
-#     #
-#     # print("Metadaten gespeichert")
-#     #
-#     # https://github.com/mlcommons/croissant/tree/main
-#
-#     ds = mlc.Dataset(memetion_url)
-#     json_metadata = ds.metadata.to_json()
-#     print(json_metadata['name'])
-#
-#     # https://www.tensorflow.org/datasets/format_specific_dataset_builders#croissantbuilder
-#     builder = tfds.dataset_builders.CroissantBuilder(
-#         jsonld=memetion_url,
-#         #record_set_ids=["fashion_mnist"],
-#         file_format='array_record',
-#     )
-#     # builder = tfds.dataset_builders.CroissantBuilder(
-#     #     # jsonld="https://raw.githubusercontent.com/mlcommons/croissant/main/datasets/0.8/huggingface-mnist/metadata.json",
-#     #     jsonld=memetion_url,
-#     #     file_format='array_record',
-#     # )
-#
-#     builder.download_and_prepare(download_dir="../data/dataset")
-#     datas = builder.as_data_source()
+from datasets import load_dataset, load_from_disk, DatasetDict, Dataset
 
-from datasets import load_dataset
+from helper.directory_functions import is_dataset_dir_existing
 
-dataset = load_dataset("AshuReddy/memetion_dataset_7k")
-dataset.save_to_disk("../data/dataset")
 
+class ExtractFeatures:
+    DATASET_DIR = "../data/dataset/"
+    DATASET_NAME = ""
+
+    def __init__(self, dataset_name="Leonardo6/memotion"):
+        self.dataset_name = dataset_name
+        self.dataset_dir_name = _create_dir_name(self.dataset_name)
+        self._load_and_save_dataset()
+
+    def _load_and_save_dataset(self):
+        if not is_dataset_dir_existing(self.dataset_dir_name):
+            cur_dataset = load_dataset(self.dataset_name)
+            cur_dataset.save_to_disk(self.DATASET_DIR + self.dataset_dir_name)
+
+    def load_dataset_from_dir(self, dataset_name="Leonardo6/memotion") -> Dataset | DatasetDict | None:
+        if is_dataset_dir_existing(_create_dir_name(dataset_name)):
+            return load_from_disk(self.DATASET_DIR + self.dataset_dir_name)
+        else:
+            return None
+
+
+def _create_dir_name(dataset_name):
+    name_list = dataset_name.split("/")
+    dir_name = ""
+    for items in name_list:
+        dir_name += (items + "_")
+
+    return dir_name
+
+
+if __name__ == "__main__":
+
+    extractor = ExtractFeatures()
+    ds = extractor.load_dataset_from_dir()
+    print("meme")
