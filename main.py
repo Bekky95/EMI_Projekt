@@ -3,9 +3,9 @@ import torchaudio
 import numpy as np
 from transformers import AutoTokenizer, AutoModel, AutoProcessor, AutoModelForZeroShotImageClassification
 import matplotlib.pyplot as plt
+import random
 
 from extract_features import ExtractFeatures
-from helper.image_functions import bytes_to_pil
 
 #TODO: pretrained Models
 # Text sentence-transformers/all-MiniLM-L6-v2 384
@@ -22,14 +22,6 @@ if __name__ == "__main__":
 
     extract_features = ExtractFeatures()
     datensatz = extract_features.load_dataset_from_dir()
-
-    #print(datensatz['train'].features)  #{'messages': List({'role': Value('string'), 'content': Value('string')}), 'images': List(Image(mode=None, decode=True))}
-
-    #print(datensatz['train'][0]['images'])  #[<PIL.JpegImagePlugin.JpegImageFile image mode=RGB size=735x500 at 0x1D186212310>]
-
-    var = datensatz['train'][3]['images'][0]
-
-    import random
 
     fig, axes = plt.subplots(2, 7, figsize=(14, 5))
     axes = axes.flatten()
