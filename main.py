@@ -20,6 +20,7 @@ from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKeggle
 
 if __name__ == "__main__":
 
+    # https://www.kaggle.com/code/vishwapatel214/clip-model
     extract_features = ExtractFeaturesKeggle()
     #extract_features.load_and_save_dataset()
 
