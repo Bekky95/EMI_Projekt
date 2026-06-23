@@ -144,30 +144,31 @@ source .venv/bin/activate
 
 
 Beispiel mit korrektem Aufruf der Bilder aus dem Datensatz yay
+
 ````python
 import matplotlib.pyplot as plt
 import random
 
-from extract_features import ExtractFeatures
+from extract_features import ExtractFeaturesHuggingface
 
 if __name__ == "__main__":
 
-    extract_features = ExtractFeatures()
-    datensatz = extract_features.load_dataset_from_dir()
+  extract_features = ExtractFeaturesHuggingface()
+  datensatz = extract_features.load_dataset_from_dir()
 
-    fig, axes = plt.subplots(2, 7, figsize=(14, 5))
-    axes = axes.flatten()
+  fig, axes = plt.subplots(2, 7, figsize=(14, 5))
+  axes = axes.flatten()
 
-    indices = random.sample(range(len(datensatz['train'])), 14)
+  indices = random.sample(range(len(datensatz['train'])), 14)
 
-    for ax, idx in zip(axes, indices):
-        img = datensatz['train'][idx]['images'][0]
-        label = datensatz['train'][idx]['messages'][0]['content']
+  for ax, idx in zip(axes, indices):
+    img = datensatz['train'][idx]['images'][0]
+    label = datensatz['train'][idx]['messages'][0]['content']
 
-        ax.imshow(img, cmap='gray')
-        ax.set_title(label)
-        ax.axis("off")
+    ax.imshow(img, cmap='gray')
+    ax.set_title(label)
+    ax.axis("off")
 
-    plt.tight_layout()
-    plt.show()
+  plt.tight_layout()
+  plt.show()
 ````
