@@ -2,10 +2,10 @@ import torch
 import torchaudio
 import numpy as np
 from transformers import AutoTokenizer, AutoModel, AutoProcessor, AutoModelForZeroShotImageClassification
-import matplotlib.pyplot as plt
-import random
 
-from extract_features import ExtractFeatures
+
+from dataset import MemotionDataset
+from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKeggle
 
 #TODO: pretrained Models
 # Text sentence-transformers/all-MiniLM-L6-v2 384
@@ -20,24 +20,19 @@ from extract_features import ExtractFeatures
 
 if __name__ == "__main__":
 
-    extract_features = ExtractFeatures()
+    extract_features = ExtractFeaturesKeggle()
+    #extract_features.load_and_save_dataset()
+
     datensatz = extract_features.load_dataset_from_dir()
-
-    fig, axes = plt.subplots(2, 7, figsize=(14, 5))
-    axes = axes.flatten()
-
-    indices = random.sample(range(len(datensatz['train'])), 14)
-
-    for ax, idx in zip(axes, indices):
-        img = datensatz['train'][idx]['images'][0]
-        label = datensatz['train'][idx]['messages'][0]['content']
-
-        ax.imshow(img, cmap='gray')
-        ax.set_title(label)
-        ax.axis("off")
-
-    plt.tight_layout()
-    plt.show()
+    print("dfghjk")  # for breakpoint
+    #
+    # train_dataset = MemotionDataset(datensatz)
+    #
+    # image, content, role = train_dataset[0]
+    #
+    # print(content)
+    # print(role)
+    # print(image.height, image.width)
 
     # # https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
     # text_model_name = "sentence-transformers/all-MiniLM-L6-v2"
