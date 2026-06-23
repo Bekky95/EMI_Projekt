@@ -82,6 +82,14 @@ Ausführlich in [Section File](#aufgabenstellung-file)
 - [ ] Setup in Readme schreiben
 - [ ] Ergebnistabelle in Readme schreiben
 - [ ] Diskussion in Readme schreiben
+- [ ] Dataset Klasse implementieren
+- [ ] Modelle als Objekte anlegen (siehe Branch tryout)
+  - [ ] Text: sentence-transformers/all-MiniLM-L6-v2 384
+  - [ ] Bild: openai/clip-vit-base-patch32 512
+- [ ] Methoden als Objekte anlegen (siehe Branch tryout)
+  - Cross-Attention (uni- oder bidirektional)
+  - Early Fusion (Konkatenation, optional mit Projektion auf gemeinsame Dimension)
+- [ ] Alles in der main.py aufrufen
 
 ### Aufgabenstellung File
 
