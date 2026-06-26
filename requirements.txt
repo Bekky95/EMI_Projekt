@@ -1,4 +1,9 @@
+pillow~=12.2.0
+matplotlib~=3.11.0
 torch~=2.12.1
+kagglehub~=1.0.2
+datasets~=5.0.0
 torchaudio~=2.11.0
 numpy~=2.4.6
 transformers~=5.12.1
+pandas

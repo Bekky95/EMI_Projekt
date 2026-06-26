@@ -82,24 +82,32 @@ Ausführlich in [Section File](#aufgabenstellung-file)
 - [ ] Setup in Readme schreiben
 - [ ] Ergebnistabelle in Readme schreiben
 - [ ] Diskussion in Readme schreiben
+- [ ] Dataset Klasse implementieren
+- [ ] Modelle als Objekte anlegen (siehe Branch tryout)
+  - [ ] Text: sentence-transformers/all-MiniLM-L6-v2 384
+  - [ ] Bild: openai/clip-vit-base-patch32 512
+- [ ] Methoden als Objekte anlegen (siehe Branch tryout)
+  - Cross-Attention (uni- oder bidirektional)
+  - Early Fusion (Konkatenation, optional mit Projektion auf gemeinsame Dimension)
+- [ ] Alles in der main.py aufrufen
 
 ### Aufgabenstellung File
 
-<img src="./data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-1.png">
+<img src="data/img/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-1.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-2.png">
+<img src="data/img/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-2.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-3.png">
+<img src="data/img/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-3.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-4.png">
+<img src="data/img/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-4.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-5.png">
+<img src="data/img/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-5.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-6.png">
+<img src="data/img/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-6.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-7.png">
+<img src="data/img/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-7.png">
 
-<img src="data/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-8.png">
+<img src="data/img/Aufgabenstellung/Laborprojekt_Multimodale_Fusion-8.png">
 
 
 ## Planung
@@ -140,5 +148,35 @@ source .venv/bin/activate
 ## Notizen
 [Link zu kompletter file](https://drive.google.com/file/d/1EV2VbuiWD4vl9lH4-UF3MYNqR8OsZ8pY/view?usp=drive_link)
 
-<img src="./data/KIM_Notes.png">
+<img src="data/img/KIM_Notes.png">
 
+
+Beispiel mit korrektem Aufruf der Bilder aus dem Datensatz yay
+
+````python
+import matplotlib.pyplot as plt
+import random
+
+from extract_features import ExtractFeaturesHuggingface
+
+if __name__ == "__main__":
+
+  extract_features = ExtractFeaturesHuggingface()
+  datensatz = extract_features.load_dataset_from_dir()
+
+  fig, axes = plt.subplots(2, 7, figsize=(14, 5))
+  axes = axes.flatten()
+
+  indices = random.sample(range(len(datensatz['train'])), 14)
+
+  for ax, idx in zip(axes, indices):
+    img = datensatz['train'][idx]['images'][0]
+    label = datensatz['train'][idx]['messages'][0]['content']
+
+    ax.imshow(img, cmap='gray')
+    ax.set_title(label)
+    ax.axis("off")
+
+  plt.tight_layout()
+  plt.show()
+````
