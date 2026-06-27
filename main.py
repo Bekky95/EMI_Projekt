@@ -33,6 +33,7 @@ if __name__ == "__main__":
     dataset_labels.head(3)
 
     extract_features.label_distributions(dataset_labels)
+    extract_features.data_cleaning_and_label_encoding(dataset_labels)
 
 
     # TODO embeddings testen
