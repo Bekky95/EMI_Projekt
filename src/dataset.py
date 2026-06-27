@@ -3,7 +3,7 @@ from torch.utils.data import Dataset
 # https://arrow.apache.org/docs/python/ -> .arrow file handling
 
 
-#TODO: Anpassen oder neue für keggle dataset
+#TODO: Anpassen oder neue für kaggle dataset
 class MemotionDataset(Dataset):
     def __init__(self, hf_dataset, transform=None):
         self.dataset = hf_dataset["train"]
