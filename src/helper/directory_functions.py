@@ -43,3 +43,26 @@ def create_dir_name(dataset_name):
         dir_name += (items + "_")
 
     return dir_name
+
+
+def search_memotion_dataset_7k_dir():
+    target = "memotion_dataset_7k"
+    return search_dir(target)
+
+
+def search_dir(searched_dir):
+    root = get_root()
+
+    for current_dir, dirs, files in os.walk(root):
+        if searched_dir in dirs:
+            path = os.path.join(current_dir, searched_dir)
+            return path
+
+    return None
+
+
+def is_memotion_dataset_7k_existing() -> bool:
+    if search_memotion_dataset_7k_dir() is not None:
+        return True
+    else:
+        return False
