@@ -65,15 +65,26 @@ class CrossAttention(nn.Module):
     #         x = x.squeeze(1)
     #         return self.classifier(x)
 
-# wenn dann in main
-# B, d = 4, 16
-#
-# text  = torch.randn(B, 6, d)   # n_A = 6
-# audio = torch.randn(B, 8, d)   # n_B = 8
-#
-#
-# # Test
-# ca = CrossAttention(d)
-# out, A = ca(text, audio)
-# print('output:', out.shape, '  <- erwartet (4, 6, 16)')
-# print('attn  :', A.shape,   '  <- erwartet (4, 6, 8)  Text fragt Audio')
+"""
+example code from Kaggle
+"""
+class CrossAttentionFusion(nn.Module):
+    """
+    Simple concat fusion — more stable than cross-attention on small datasets.
+    Concatenates CLIP image + RoBERTa text features, projects to fusion_dim.
+    """
+    def __init__(self, img_dim, txt_dim, fusion_dim, **kwargs):
+        super().__init__()
+        self.proj = nn.Sequential(
+            nn.Linear(img_dim + txt_dim, fusion_dim * 2),
+            nn.GELU(),
+            nn.Dropout(0.3),
+            nn.Linear(fusion_dim * 2, fusion_dim),
+            nn.LayerNorm(fusion_dim),
+        )
+
+    def forward(self, img_feat, txt_feat):
+        combined = torch.cat([img_feat, txt_feat], dim=-1)  # (B, 512+768)
+        return self.proj(combined)                           # (B, fusion_dim)
+
+print("Concat Fusion ready ✅")
