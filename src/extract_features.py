@@ -309,7 +309,6 @@ class ExtractFeaturesKaggle:
 
 ## ----- GETTER ------------------------------------------------------
 
-    def get_images_path(self):
     def get_images_path(self) -> str:
         """
         gibt den kompletten Datenpfad zu /images zurück, beginnend bei Laufwerk C
