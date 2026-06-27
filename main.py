@@ -32,8 +32,10 @@ if __name__ == "__main__":
     print("Cols:", dataset_labels.columns.tolist())
     dataset_labels.head(3)
 
-    extract_features.label_distributions(dataset_labels)
-    extract_features.data_cleaning_and_label_encoding(dataset_labels)
+    #extract_features.label_distributions(dataset_labels)
+    encoded_labels = extract_features.data_cleaning_and_label_encoding(dataset_labels)
+    extract_features.sort_class_weights(encoded_labels)
+
 
 
     # TODO embeddings testen

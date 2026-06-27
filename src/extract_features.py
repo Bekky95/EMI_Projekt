@@ -3,8 +3,17 @@ import re
 from datasets import load_dataset, load_from_disk, DatasetDict, Dataset
 import kagglehub
 import pandas as pd
+import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
+from sklearn.utils.class_weight import compute_class_weight
+from sklearn.metrics import classification_report, confusion_matrix
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torch.utils.data import Dataset, DataLoader, WeightedRandomSampler
+from torch.cuda.amp import GradScaler, autocast
 
 from helper.directory_functions import is_dataset_dir_existing, create_dir_name, get_root, \
     search_memotion_dataset_7k_dir, is_memotion_dataset_7k_existing
@@ -54,6 +63,7 @@ class ExtractFeaturesHuggingface:
 
 class ExtractFeaturesKaggle:
     DATASET_DIR = os.path.join(get_root(), "data", "dataset")
+    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     def __init__(self, dataset_name="williamscott701/memotion-dataset-7k"):
         self.dataset_name = dataset_name
@@ -207,7 +217,23 @@ class ExtractFeaturesKaggle:
 
         print(f"Final dataset: {len(df)} rows")
         print(df["sentiment_3"].value_counts())
-        return None
+        return df
+
+    def get_class_weights(self, labels, num_classes):
+        classes = np.arange(num_classes)
+        cw = compute_class_weight("balanced", classes=classes, y=labels)
+        return torch.tensor(cw, dtype=torch.float32).to(self.DEVICE)
+
+    # TODO why?
+    def sort_class_weights(self, df: pd.DataFrame):
+        WEIGHTS = {
+            "sentiment": self.get_class_weights(df["label_sentiment"].values, 3),
+            "humour": self.get_class_weights(df["label_humour"].values, 4),
+            "sarcasm": self.get_class_weights(df["label_sarcasm"].values, 4),
+            "offensive": self.get_class_weights(df["label_offensive"].values, 4),
+        }
+        for k, v in WEIGHTS.items():
+            print(f"{k:12s}: {v.cpu().numpy().round(3)}")
 
     def is_dataset_loaded_locally(self) -> bool:
         return self._is_full_dataset_dir_existing
