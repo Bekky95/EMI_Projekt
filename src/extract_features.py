@@ -53,6 +53,8 @@ class ExtractFeaturesKaggle:
 
     def __init__(self):
         #self.dataset_name = dataset_name
+        # TODO: Abfrage ob Dataset-Name "williamscott701/memotion-dataset-7k" oder "memotion_dataset_7k" ?
+        #  Bei mir war der Funktionsaufruf create_dir_name() schädlich
         #self.dataset_dir_name = create_dir_name(self.DATASET_NAME)
         self.dataset_dir_name = self.DATASET_NAME
         self._is_loaded_locally = is_dataset_dir_existing(self.dataset_dir_name)
