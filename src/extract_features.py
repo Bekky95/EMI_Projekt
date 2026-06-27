@@ -7,6 +7,8 @@ from PIL import Image
 from helper.directory_functions import is_dataset_dir_existing, create_dir_name, get_root, \
     search_memotion_dataset_7k_dir, is_memotion_dataset_7k_existing
 
+# TODO hier könnte man auch mit Vererbung arbeiten eine ExtractFeatures-Überklasse und Huggingface und Kaggle erben :D
+#  aber das ist jetzt unnötig, will dich nur ärgern
 
 class ExtractFeaturesHuggingface:
     DATASET_DIR = os.path.join(get_root(), "data", "dataset")

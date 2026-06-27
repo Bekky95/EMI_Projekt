@@ -6,6 +6,8 @@ from transformers import AutoTokenizer, AutoModel, AutoProcessor, AutoModelForZe
 from dataset import MemotionDataset
 from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKaggle
 from helper.directory_functions import search_memotion_dataset_7k_dir
+from models.text_model import text_embedding
+from models.image_model import image_embedding
 
 #TODO: pretrained Models
 # Text sentence-transformers/all-MiniLM-L6-v2 384
@@ -26,6 +28,30 @@ if __name__ == "__main__":
 
     dataset = extract_features.load_dataset_from_dir()
     print("dfghjk")  # for breakpoint
+
+    # TODO embeddings testen
+    # h_t = text_embedding(dataset)
+    # print(h_t)
+    # h_i = image_embedding(dataset)
+    # print(h_i)
+
+    ## Iteration über den ganzen Datensatz und alles in einer Datei speichern
+    '''
+    # Audio und Video Embedding Beispiel
+    records = []
+    for path in all_files:
+        h_a = audio_embedding(audio_path(path))
+        h_v = video_embedding(video_path(path))
+        label = parse_label(path)
+        speaker = parse_speaker(path)
+        records.append({"h_a": h_a, "h_v": h_v,
+                        "label": label, "speaker": speaker})                  
+        np.savez("ravdess_features.npz",
+                h_a=np.stack([r["h_a"] for r in records]),
+                h_v=np.stack([r["h_v"] for r in records]),
+                label=np.array([r["label"] for r in records]),
+                speaker=np.array([r["speaker"] for r in records]))
+    '''
 
     #
     # train_dataset = MemotionDataset(datensatz)
