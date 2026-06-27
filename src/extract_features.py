@@ -50,7 +50,6 @@ class ExtractFeaturesHuggingface:
 
 class ExtractFeaturesKaggle:
     DATASET_DIR = os.path.join(get_root(), "data", "dataset")
-    DATASET_NAME = ""
 
     def __init__(self, dataset_name="williamscott701/memotion-dataset-7k"):
         self.dataset_name = dataset_name
@@ -61,7 +60,7 @@ class ExtractFeaturesKaggle:
     # path = kagglehub.dataset_download("williamscott701/memotion-dataset-7k")
     def load_and_save_dataset(self, dataset_name="williamscott701/memotion-dataset-7k"):
         if not self._is_full_dataset_dir_existing:
-            if dataset_name == self.DATASET_NAME:
+            if dataset_name == self.dataset_name:
                 dataset_dir = os.path.join(self.DATASET_DIR, self.dataset_dir_name)
                 print(f"directory to dataset: {dataset_dir}")
                 kagglehub.dataset_download(dataset_name, output_dir=dataset_dir)
@@ -75,8 +74,11 @@ class ExtractFeaturesKaggle:
             return None
 
     def load_dataset_from_dir(self, dataset_name="williamscott701/memotion-dataset-7k"):
+        #TODO: der self.get_labels_csv() Aufruf ist irgendwie redundant, da
+        # ja der komplette Datenpfad zu memotion_dataset_7k zurückgegeben wird und
+        # da ja auch der Überordner drin ist, der in self.load_and_save_dataset
+        # generiert wird
         if self._is_memotion_dataset_7k_dir_existing:
-            print("memotion_dataset_7k_dir_existing")
 
             if self._is_full_dataset_dir_existing:
                 if dataset_name == self.dataset_name:
