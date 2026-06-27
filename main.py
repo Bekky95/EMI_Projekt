@@ -26,8 +26,14 @@ if __name__ == "__main__":
     extract_features = ExtractFeaturesKaggle()
     #extract_features.load_and_save_dataset()
 
-    dataset = extract_features.load_dataset_from_dir()
-    print("dfghjk")  # for breakpoint
+    dataset_labels = extract_features.load_dataset_from_dir()
+    #print(f"dataset output: {dataset}")  # for breakpoint
+    print("Shape (rows, columns): ", dataset_labels.shape)
+    print("Cols:", dataset_labels.columns.tolist())
+    dataset_labels.head(3)
+
+    extract_features.label_distributions(dataset_labels)
+
 
     # TODO embeddings testen
     # h_t = text_embedding(dataset)

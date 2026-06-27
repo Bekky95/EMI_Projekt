@@ -3,6 +3,7 @@ from datasets import load_dataset, load_from_disk, DatasetDict, Dataset
 import kagglehub
 import pandas as pd
 from PIL import Image
+import matplotlib.pyplot as plt
 
 from helper.directory_functions import is_dataset_dir_existing, create_dir_name, get_root, \
     search_memotion_dataset_7k_dir, is_memotion_dataset_7k_existing
@@ -115,6 +116,31 @@ class ExtractFeaturesKaggle:
                 bad_images += 1
         df = df.loc[valid_indices].reset_index(drop=True)
         print(f"Skipped {bad_images} corrupt images. Valid images: {len(df)}")
+
+
+    def label_distributions(self, df):
+        """
+        plots a figure with all labels and their counts
+        """
+        tasks = ['humour', 'sarcasm', 'offensive', 'motivational', 'overall_sentiment'] # emotion-labels aus der memotion-7k- CSV-Datei
+        fig, axes = plt.subplots(1, 4, figsize=(20, 4))
+        for ax, col in zip(axes, tasks):
+            if col in df.columns:
+                counts = df[col].value_counts()
+                counts.plot(kind="bar", ax=ax, color="#3498db", edgecolor="white")
+                ax.set_title(col, fontsize=11)
+                ax.set_xlabel("")
+                ax.tick_params(axis="x", rotation=30)
+                for bar, val in zip(ax.patches, counts):
+                    ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 10,
+                            str(val), ha="center", fontsize=8)
+        plt.suptitle("Memotion 7K — Class Distributions", fontsize=14)
+        plt.tight_layout()
+        #plt.savefig(os.path.join(CFG["out_dir"], "eda_distributions.png"), dpi=150)
+        plt.show()
+
+    def data_cleaning_and_label_encoding(self):
+        return None
 
     def is_dataset_loaded_locally(self) -> bool:
         return self._is_full_dataset_dir_existing
