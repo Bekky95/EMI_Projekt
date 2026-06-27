@@ -7,17 +7,22 @@ lineares Modell drauf. Wenn Ihre Fusion-Methoden diese Baseline nicht schlagen, 
 und gehört in die Diskussion.
 '''
 
-from transformers import CLIPProcessor, CLIPModel
+from transformers import CLIPProcessor, CLIPModel, CLIPTokenizer, CLIPVisionModel, CLIPFeatureExtractor
 from PIL import Image
 import torch
 
-clip = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").eval()
-proc = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+MODEL_NAME = "openai/clip-vit-base-patch32"
+
+clip = CLIPModel.from_pretrained(MODEL_NAME).eval()
+proc = CLIPProcessor.from_pretrained(MODEL_NAME) # Constructs a CLIP processor which wraps a CLIP feature extractor and a CLIP tokenizer into a single processor.
+tokenizer = CLIPTokenizer.from_pretrained(MODEL_NAME)
+clip_vision = CLIPVisionModel.from_pretrained(MODEL_NAME)
 
 class ClipModel:
     def __init__(self):
         self.model = clip
-        self.pre_processor = proc # kaggle user uses cpu
+        self.pre_processor = proc
+        self.tokenizer = tokenizer
 
     def get_image_model(self):
         return self.model
@@ -33,9 +38,22 @@ class ClipModel:
         for p in self.model.parameters():
             p.requires_grad = False
 
+# TODO image embeddings mit ClipVisionModel testen? oder CLIPFeatureExtractor
+#  https://huggingface.co/transformers/v4.6.0/model_doc/clip.html
     def image_embedding(self, img_path):
         img = Image.open(img_path).convert("RGB")
         inputs = proc(images=img, return_tensors="pt")
+
+        # Move to GPU if available
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        model = self.model.to(device)
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+
         with torch.no_grad():
-            feat = clip.get_image_features(**inputs) # (1, 512)
-        return feat.squeeze().numpy()
+            feat = model.get_image_features(**inputs) # (1, 512)
+
+            # Normalize the embedding
+            #image_features = feat / feat.norm(p=2, dim=-1, keepdim=True)
+
+        return feat.detach().cpu().numpy()
+        #return feat.squeeze().numpy()

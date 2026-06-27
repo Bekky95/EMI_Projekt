@@ -9,9 +9,13 @@ class MiniLMModel:
     def __init__(self):
         self.model_name = MODEL_NAME
         self.text_model = TEXT_MODEL
+        self.tokenizer = TEXT_MODEL.tokenizer
 
     def get_model(self):
         return self.text_model
+
+    def get_tokenizer(self):
+        return self.tokenizer
 
     def get_model_dimension(self):
         return self.text_model.get_embedding_dimension()

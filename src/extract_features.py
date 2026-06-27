@@ -69,13 +69,13 @@ class ExtractFeaturesHuggingface:
 
 class ExtractFeaturesKaggle:
     DATASET_DIR = os.path.join(get_root(), "data", "dataset")
-    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     def __init__(self, dataset_name="williamscott701/memotion-dataset-7k"):
         self.dataset_name = dataset_name
         self.dataset_dir_name = create_dir_name(self.dataset_name)
         self._is_full_dataset_dir_existing = is_dataset_dir_existing(self.dataset_dir_name)
         self._is_memotion_dataset_7k_dir_existing = is_memotion_dataset_7k_existing()
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # path = kagglehub.dataset_download("williamscott701/memotion-dataset-7k")
     def load_and_save_dataset(self, dataset_name="williamscott701/memotion-dataset-7k"):
@@ -156,10 +156,9 @@ class ExtractFeaturesKaggle:
         #plt.savefig(os.path.join(CFG["out_dir"], "eda_distributions.png"), dpi=150)
         plt.show()
 
-    def data_cleaning_and_label_encoding(self, df: pd.DataFrame):
+    def data_cleaning_and_label_encoding(self, df: pd.DataFrame, img_dir):
         # ── Fix image names ──
         df["image_name"] = df["image_name"].astype(str).str.strip()
-        IMG_DIR = self.get_images_path()
 
         def fix_ext(name):
             if not name.lower().endswith((".jpg", ".jpeg", ".png", ".gif")):
@@ -170,7 +169,7 @@ class ExtractFeaturesKaggle:
 
         # ── Drop rows with missing images ──
         df["img_ok"] = df["image_name"].apply(
-            lambda x: os.path.exists(os.path.join(IMG_DIR, x))
+            lambda x: os.path.exists(os.path.join(img_dir, x))
         )
         print(f"Images found: {df['img_ok'].sum()} / {len(df)}")
         df = df[df["img_ok"]].reset_index(drop=True)
@@ -286,5 +285,5 @@ class ExtractFeaturesKaggle:
     def get_class_weights(self, labels, num_classes):
         classes = np.arange(num_classes)
         cw = compute_class_weight("balanced", classes=classes, y=labels)
-        return torch.tensor(cw, dtype=torch.float32).to(self.DEVICE)
+        return torch.tensor(cw, dtype=torch.float32).to(self.device)
 
