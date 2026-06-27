@@ -26,6 +26,7 @@ from helper.directory_functions import is_dataset_dir_existing, create_dir_name,
 
 # TODO hier könnte man auch mit Vererbung arbeiten eine ExtractFeatures-Überklasse und Huggingface und Kaggle erben :D
 #  aber das ist jetzt unnötig, will dich nur ärgern
+# Das willst du nicht, dass ich das jetzt anfange :D
 
 class ExtractFeaturesHuggingface:
     DATASET_DIR = os.path.join(get_root(), "data", "dataset")
