@@ -56,6 +56,11 @@ class CLIPMemotionDataset(Dataset):
 
 class MemotionDataset(Dataset):
     # https://arrow.apache.org/docs/python/ -> .arrow file handling
+# https://arrow.apache.org/docs/python/ -> .arrow file handling
+
+
+#TODO: Anpassen oder neue für kaggle dataset
+class MemotionDataset(Dataset):
     def __init__(self, hf_dataset, transform=None):
         self.dataset = hf_dataset["train"]
         self.transform = transform
@@ -66,9 +71,9 @@ class MemotionDataset(Dataset):
     def __getitem__(self, idx: int):
         sample = self.dataset[idx]
 
-        # for debugging:
-        # var = sample["messages"][0]
-        # var2 = sample["images"]
+        #TODO: für Datenanalyse, was ist im Datensatz so drin:
+        var = sample["messages"][0]
+        var2 = sample["images"]
 
         image: JpegImageFile = sample["images"][0]
         content: str = sample["messages"][0]["content"]
