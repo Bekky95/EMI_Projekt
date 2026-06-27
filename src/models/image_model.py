@@ -1,1 +1,0 @@
-# Bild openai/clip-vit-base-patch32 512
