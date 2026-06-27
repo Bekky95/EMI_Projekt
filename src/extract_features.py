@@ -28,6 +28,7 @@ from helper.directory_functions import is_dataset_dir_existing, create_dir_name,
 #  aber das ist jetzt unnötig, will dich nur ärgern
 # Das willst du nicht, dass ich das jetzt anfange :D
 
+
 class ExtractFeaturesHuggingface:
     DATASET_DIR = os.path.join(get_root(), "data", "dataset")
     DATASET_NAME = ""
@@ -156,11 +157,11 @@ class ExtractFeaturesKaggle:
                 with Image.open(img_path) as im:
                     im.verify()
                 valid_indices.append(i)
-            except:
+            except Exception as e:
+                print("Exception: ", e)
                 bad_images += 1
         df = df.loc[valid_indices].reset_index(drop=True)
         print(f"Skipped {bad_images} corrupt images. Valid images: {len(df)}")
-
 
     def label_distributions(self, df: pd.DataFrame):
         """
@@ -285,7 +286,7 @@ class ExtractFeaturesKaggle:
         print("Train sentiment dist:", Counter(df_train["label_sentiment"].tolist()))
         return df_train, df_val, df_test
 
-    def DEBUG_label_distribution_check(self, df: pd.DataFrame,df_train: pd.DataFrame, df_val: pd.DataFrame, df_test: pd.DataFrame):
+    def DEBUG_label_distribution_check(self, df: pd.DataFrame, df_train: pd.DataFrame, df_val: pd.DataFrame, df_test: pd.DataFrame):
         # DEBUG — Check label distributions
         print("=== FULL DATASET ===")
         print(df["sentiment_3"].value_counts())
