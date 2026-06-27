@@ -32,9 +32,12 @@ if __name__ == "__main__":
     print("Cols:", dataset_labels.columns.tolist())
     dataset_labels.head(3)
 
+    ## stole the code from a kaggle user
     #extract_features.label_distributions(dataset_labels)
     encoded_labels = extract_features.data_cleaning_and_label_encoding(dataset_labels)
-    extract_features.sort_class_weights(encoded_labels)
+    #extract_features.sort_class_weights(encoded_labels)
+    d_train, d_val, d_test = extract_features.train_validate_test_split(encoded_labels)
+    extract_features.DEBUG_label_distribution_check(encoded_labels, d_train, d_val, d_test)
 
 
 

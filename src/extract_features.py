@@ -1,11 +1,17 @@
 import os.path
 import re
+import json, pickle, math, warnings
 from datasets import load_dataset, load_from_disk, DatasetDict, Dataset
 import kagglehub
 import pandas as pd
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
+
+#import seaborn as sns
+from collections import Counter
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 from sklearn.utils.class_weight import compute_class_weight
 from sklearn.metrics import classification_report, confusion_matrix
 
@@ -219,11 +225,6 @@ class ExtractFeaturesKaggle:
         print(df["sentiment_3"].value_counts())
         return df
 
-    def get_class_weights(self, labels, num_classes):
-        classes = np.arange(num_classes)
-        cw = compute_class_weight("balanced", classes=classes, y=labels)
-        return torch.tensor(cw, dtype=torch.float32).to(self.DEVICE)
-
     # TODO why?
     def sort_class_weights(self, df: pd.DataFrame):
         WEIGHTS = {
@@ -235,12 +236,55 @@ class ExtractFeaturesKaggle:
         for k, v in WEIGHTS.items():
             print(f"{k:12s}: {v.cpu().numpy().round(3)}")
 
+    def train_validate_test_split(self, df: pd.DataFrame):
+        """
+        splits the Dataframe into a
+        train component,
+        validate component
+        and test component
+        """
+        idx = np.arange(len(df))
+        y_strat = df["label_sentiment"].values
+
+        tr_idx, tmp_idx = train_test_split(idx, test_size=0.30, random_state=42, stratify=y_strat)
+        vl_idx, ts_idx = train_test_split(tmp_idx, test_size=0.50, random_state=42,
+                                          stratify=y_strat[tmp_idx])
+
+        df_train = df.iloc[tr_idx].reset_index(drop=True)
+        df_val = df.iloc[vl_idx].reset_index(drop=True)
+        df_test = df.iloc[ts_idx].reset_index(drop=True)
+
+        print(f"Train: {len(df_train)} | Val: {len(df_val)} | Test: {len(df_test)}")
+        print("Train sentiment dist:", Counter(df_train["label_sentiment"].tolist()))
+        return df_train, df_val, df_test
+
+    def DEBUG_label_distribution_check(self, df: pd.DataFrame,df_train: pd.DataFrame, df_val: pd.DataFrame, df_test: pd.DataFrame):
+        # DEBUG — Check label distributions
+        print("=== FULL DATASET ===")
+        print(df["sentiment_3"].value_counts())
+        print("label_sentiment unique:", sorted(df["label_sentiment"].unique()))
+        print("Any NaN?", df["label_sentiment"].isna().sum())
+
+        print("\n=== AFTER SPLIT ===")
+        print("Train:", Counter(df_train["label_sentiment"].tolist()))
+        print("Val  :", Counter(df_val["label_sentiment"].tolist()))
+        print("Test :", Counter(df_test["label_sentiment"].tolist()))
+
+# ----- BOOL Tests -----------------------------------------------
+
     def is_dataset_loaded_locally(self) -> bool:
         return self._is_full_dataset_dir_existing
+
+## ----- GETTER ------------------------------------------------------
 
     def get_images_path(self):
         return os.path.join(search_memotion_dataset_7k_dir(), "images")
 
     def get_labels_csv_path(self):
         return os.path.join(search_memotion_dataset_7k_dir(), "labels.csv")
+
+    def get_class_weights(self, labels, num_classes):
+        classes = np.arange(num_classes)
+        cw = compute_class_weight("balanced", classes=classes, y=labels)
+        return torch.tensor(cw, dtype=torch.float32).to(self.DEVICE)
 
