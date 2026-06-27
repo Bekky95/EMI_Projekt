@@ -54,13 +54,8 @@ class CLIPMemotionDataset(Dataset):
         }
 
 
-#class MemotionDataset(Dataset):
+class MemotionDatasetHuggingface(Dataset):
     # https://arrow.apache.org/docs/python/ -> .arrow file handling
-    # https://arrow.apache.org/docs/python/ -> .arrow file handling
-
-
-#TODO: Anpassen oder neue für kaggle dataset
-class MemotionDataset(Dataset):
     def __init__(self, hf_dataset, transform=None):
         self.dataset = hf_dataset["train"]
         self.transform = transform
