@@ -180,3 +180,79 @@ if __name__ == "__main__":
   plt.tight_layout()
   plt.show()
 ````
+
+# How to Automate Kaggle Dataset Downloads with Python
+[Link zu Medium Tutorial](https://medium.com/data-science-collective/how-to-automate-kaggle-dataset-downloads-with-python-f0788710fb5c)
+
+## Step 1: Setting up the API
+
+First, you need to install the Kaggle Python package:
+
+````shell
+pip install kaggle
+````
+Then, create an API token:
+
+- Go to your Kaggle account settings: Settings.
+- Scroll down to the API section and click Create New API Token.
+- This will download a kaggle.json file containing your username and API key.
+
+Move this file to the following location (depending on your operating system):
+
+- Linux/Mac: ~/.kaggle/
+- Windows: C:\Users\<YourUsername>\.kaggle\
+
+Ensure that the file permissions are secure:
+
+````shell
+chmod 600 ~/.kaggle/kaggle.json
+````
+
+## Step 2: Downloading the Dataset
+
+To download the entire dataset as a ZIP file:
+
+(insert the dataset which you want  to download)
+
+````shell
+kaggle datasets download -d heptapod/titanic
+````
+
+If you prefer to do it directly from Python:
+
+````python
+import kaggle
+
+# Download the Titanic dataset
+kaggle.api.dataset_download_files('heptapod/titanic', path='data/', unzip=True)
+````
+
+Now, the Titanic dataset will be stored in the data/ directory, and the ZIP file will be automatically extracted.
+
+## Listing Dataset Files
+
+To see which files are included in the dataset, use:
+
+````python
+# List files in the Titanic dataset
+files = kaggle.api.dataset_list_files('heptapod/titanic')
+
+print(files)
+````
+
+Output:
+
+````
+Dataset URL: https://www.kaggle.com/datasets/heptapod/titanic
+[{"ref": "", "datasetRef": "", "ownerRef": "", "name": "train_and_test2.csv", "creationDate": "2019-09-20T15:44:27.234Z", "description": "", "fileType": "", "url": "", "totalBytes": 83879, "columns": []}]
+````
+
+## Searching for Datasets
+
+````python
+# Search for datasets related to cars
+datasets = kaggle.api.dataset_list(search="cars")
+for dataset in datasets:
+    print(f"{dataset.title} - {dataset.ref}")
+````
+

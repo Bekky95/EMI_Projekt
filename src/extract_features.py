@@ -46,20 +46,23 @@ class ExtractFeaturesHuggingface:
 
 # kagglehub.dataset_download("kerneler/starter-memotion-dataset-7k-5c8a3974-b")
 
-class ExtractFeaturesKeggle:
+class ExtractFeaturesKaggle:
     DATASET_DIR = os.path.join(get_root(), "data", "dataset")
-    DATASET_NAME = ""
+    DATASET_NAME = "memotion_dataset_7k"
+    # DATASET_NAME = "williamscott701/memotion-dataset-7k"
 
-    def __init__(self, dataset_name="williamscott701/memotion-dataset-7k"):
-        self.dataset_name = dataset_name
-        self.dataset_dir_name = create_dir_name(self.dataset_name)
+    def __init__(self):
+        #self.dataset_name = dataset_name
+        #self.dataset_dir_name = create_dir_name(self.DATASET_NAME)
+        self.dataset_dir_name = self.DATASET_NAME
         self._is_loaded_locally = is_dataset_dir_existing(self.dataset_dir_name)
 
     # path = kagglehub.dataset_download("williamscott701/memotion-dataset-7k")
-    def load_and_save_dataset(self, dataset_name="williamscott701/memotion-dataset-7k"):
+    def load_and_save_dataset(self, dataset_name):
         if not self._is_loaded_locally:
-            if dataset_name == self.dataset_name:
+            if dataset_name == self.DATASET_NAME:
                 dataset_dir = os.path.join(self.DATASET_DIR, self.dataset_dir_name)
+                print(f"directory to dataset: {dataset_dir}")
                 #kagglehub.login()
                 kagglehub.dataset_download(dataset_name, output_dir=dataset_dir)
                 self._is_loaded_locally = is_dataset_dir_existing(self.dataset_dir_name)
@@ -71,18 +74,20 @@ class ExtractFeaturesKeggle:
             print("Dataset is already loaded locally")
             return None
 
-    def load_dataset_from_dir(self, dataset_name="williamscott701/memotion-dataset-7k"):
+    def load_dataset_from_dir(self, dataset_name):
         if self._is_loaded_locally:
-            if dataset_name == self.dataset_name:
-                ghj = os.path.join(self.DATASET_DIR, self.dataset_dir_name, "memotion_dataset_7k", "labels.csv")
-                asdfgh = pd.read_csv(ghj)
-                return asdfgh
+            if dataset_name == self.DATASET_NAME:
+                path_to_label = os.path.join(self.DATASET_DIR, self.dataset_dir_name, "labels.csv")
+                print(f"directory to dataset: {path_to_label}")
+                labels = pd.read_csv(path_to_label)
+                return labels
             else:
                 print(f"{dataset_name} is not this dataset")
                 return None
         else:
             print("Dataset is not loaded locally")
             return None
+
 
     def is_dataset_loaded_locally(self) -> bool:
         return self._is_loaded_locally

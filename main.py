@@ -3,9 +3,8 @@ import torchaudio
 import numpy as np
 from transformers import AutoTokenizer, AutoModel, AutoProcessor, AutoModelForZeroShotImageClassification
 
-
 from dataset import MemotionDataset
-from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKeggle
+from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKaggle
 
 #TODO: pretrained Models
 # Text sentence-transformers/all-MiniLM-L6-v2 384
@@ -21,10 +20,10 @@ from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKeggle
 if __name__ == "__main__":
 
     # https://www.kaggle.com/code/vishwapatel214/clip-model
-    extract_features = ExtractFeaturesKeggle()
+    extract_features = ExtractFeaturesKaggle()
     #extract_features.load_and_save_dataset()
 
-    datensatz = extract_features.load_dataset_from_dir()
+    dataset = extract_features.load_dataset_from_dir("memotion_dataset_7k")
     print("dfghjk")  # for breakpoint
     #
     # train_dataset = MemotionDataset(datensatz)
