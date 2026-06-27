@@ -5,6 +5,7 @@ from transformers import AutoTokenizer, AutoModel, AutoProcessor, AutoModelForZe
 
 from dataset import MemotionDataset
 from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKaggle
+from helper.directory_functions import search_memotion_dataset_7k_dir
 
 #TODO: pretrained Models
 # Text sentence-transformers/all-MiniLM-L6-v2 384
@@ -23,8 +24,9 @@ if __name__ == "__main__":
     extract_features = ExtractFeaturesKaggle()
     #extract_features.load_and_save_dataset()
 
-    dataset = extract_features.load_dataset_from_dir("memotion_dataset_7k")
+    dataset = extract_features.load_dataset_from_dir()
     print("dfghjk")  # for breakpoint
+
     #
     # train_dataset = MemotionDataset(datensatz)
     #
