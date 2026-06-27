@@ -54,9 +54,9 @@ class CLIPMemotionDataset(Dataset):
         }
 
 
-class MemotionDataset(Dataset):
+#class MemotionDataset(Dataset):
     # https://arrow.apache.org/docs/python/ -> .arrow file handling
-# https://arrow.apache.org/docs/python/ -> .arrow file handling
+    # https://arrow.apache.org/docs/python/ -> .arrow file handling
 
 
 #TODO: Anpassen oder neue für kaggle dataset
