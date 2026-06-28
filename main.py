@@ -7,14 +7,13 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 from sklearn.model_selection import train_test_split
 from transformers import CLIPProcessor, CLIPModel
 
-from dataset import MemotionDataset
-from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKaggle
+from dataset import CLIPMemotionDataset
 from helper.directory_functions import search_memotion_dataset_7k_dir
+from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKaggle
+from extract_features import ExtractFeaturesKaggle
 from models import miniLM_model
 from models.miniLM_model import MiniLMModel
 from models.clip_model import ClipModel
-from dataset import CLIPMemotionDataset
-from extract_features import ExtractFeaturesKaggle
 
 
 #TODO: pretrained Models
