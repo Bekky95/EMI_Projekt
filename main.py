@@ -1,21 +1,33 @@
 import os
 import torchaudio
 import numpy as np
+import copy
+import torch
+from torch import nn
+from torch.utils.data import DataLoader
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+from sklearn.model_selection import train_test_split
+from transformers import CLIPProcessor, CLIPModel
 from torchvision import transforms
 from transformers import AutoTokenizer, AutoModel, AutoProcessor, AutoModelForZeroShotImageClassification
 
+from dataset import CLIPMemotionDataset
 from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKaggle
 from dataset import MemotionDataset
 from pytorch_dataset import MemotionDataset
 
 from helper.directory_functions import search_memotion_dataset_7k_dir
+from extract_features import ExtractFeaturesHuggingface, ExtractFeaturesKaggle
+from extract_features import ExtractFeaturesKaggle
 from helper.makros import DEVICE
 from models import miniLM_model
-
 from models.miniLM_model import MiniLMModel
 from models.clip_model import ClipModel
 
 
+#TODO: pretrained Models
+# Text sentence-transformers/all-MiniLM-L6-v2 384
+# Bild openai/clip-vit-base-patch32 512
 
 #TODO: Datensatz:
 # Memotion (Bild + Text, Sentiment auf Memes, klein)

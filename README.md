@@ -12,7 +12,29 @@
 - [Notizen](#notizen)
 
 ## Setup
-tbd 
+
+Klonen des Repositorys:
+````shell
+git clone https://github.com/Bekky95/EMI_Projekt.git
+````
+
+Virtuellen Enviroment erstellen und aktivieren:
+````shell
+# create virtual enviroment /.venv :
+python3 -m venv .venv
+
+#activate virtual enviroment:
+source .venv/bin/activate
+````
+
+Benötigte Pakete installieren:
+````shell
+pip install -r .\requirements.txt
+````
+
+Nach dem Klonen muss nur die `main.py` gestartet werden und das komplette Training wird ausgeführt.
+Beim Starten wird geprüft ob das Datenset bereits im Verzeichnis ist, wenn nicht, wird dieses heruntergeladen.
+Ansonsten wird das Datenset aus dem Verzeichnis `./data/dataset<Dataset_name_>` geladen. Es muss also kein Datenset manuell geladen werden
 
 ## Ergebnistabelle
 tbd
@@ -79,7 +101,7 @@ Sie Ihre Ergebnisse im Code-Repository. \
 Ausführlich in [Section File](#aufgabenstellung-file)
 
 ### Todo Liste
-- [ ] Setup in Readme schreiben
+- [x] Setup in Readme schreiben
 - [ ] Ergebnistabelle in Readme schreiben
 - [ ] Diskussion in Readme schreiben
 - [ ] Dataset Klasse implementieren

@@ -26,6 +26,8 @@ from helper.directory_functions import is_dataset_dir_existing, create_dir_name,
 
 # TODO hier könnte man auch mit Vererbung arbeiten eine ExtractFeatures-Überklasse und Huggingface und Kaggle erben :D
 #  aber das ist jetzt unnötig, will dich nur ärgern
+# Das willst du nicht, dass ich das jetzt anfange :D
+
 
 class ExtractFeaturesHuggingface:
     DATASET_DIR = os.path.join(get_root(), "data", "dataset")
@@ -71,6 +73,12 @@ class ExtractFeaturesKaggle:
     DATASET_DIR = os.path.join(get_root(), "data", "dataset")
 
     def __init__(self, dataset_name="williamscott701/memotion-dataset-7k"):
+        """
+        Klasse, die das Laden und im Projektverzeichnis ablegen von
+        Datensets aus Keggle kapselt
+
+        :param dataset_name: default="williamscott701/memotion-dataset-7k"
+        """
         self.dataset_name = dataset_name
         self.dataset_dir_name = create_dir_name(self.dataset_name)
         self._is_full_dataset_dir_existing = is_dataset_dir_existing(self.dataset_dir_name)
@@ -79,6 +87,12 @@ class ExtractFeaturesKaggle:
 
     # path = kagglehub.dataset_download("williamscott701/memotion-dataset-7k")
     def load_and_save_dataset(self, dataset_name="williamscott701/memotion-dataset-7k"):
+        """
+        Läd das Datenset runter, legt ein Überordner an /<Username>_<Datasetname>_
+
+        :param dataset_name: default="williamscott701/memotion-dataset-7k"
+        :return: True || False je nachdem ob das Runterladen funktioniert hat
+        """
         if not self._is_full_dataset_dir_existing:
             if dataset_name == self.dataset_name:
                 dataset_dir = os.path.join(self.DATASET_DIR, self.dataset_dir_name)
@@ -94,6 +108,14 @@ class ExtractFeaturesKaggle:
             return None
 
     def load_dataset_from_dir(self, dataset_name="williamscott701/memotion-dataset-7k"):
+        """
+        Läd den Datensatz aus dem Projektverzeichnis, aktuell sucht es den in load_and_save_dataset() angelegten
+        Überordner oder den für das default Datenset übliche Verzeichnis memotion-dataset-7k und läd dort die
+        Daten heraus
+
+        :param dataset_name: default="williamscott701/memotion-dataset-7k"
+        :return:
+        """
         #TODO: der self.get_labels_csv() Aufruf ist irgendwie redundant, da
         # ja der komplette Datenpfad zu memotion_dataset_7k zurückgegeben wird und
         # da ja auch der Überordner drin ist, der in self.load_and_save_dataset
@@ -115,6 +137,12 @@ class ExtractFeaturesKaggle:
             return None
 
     def check_for_bad_images(self, csv_data):
+        """
+        Code den ich aus https://www.kaggle.com/code/vishwapatel214/clip-model übernommen hab
+
+        :param csv_data:
+        :return:
+        """
         df = csv_data[["image_name", "text_corrected", "overall_sentiment"]].dropna(
             subset=["text_corrected", "overall_sentiment"])
         df["text_corrected"] = df["text_corrected"].astype(str)
@@ -129,11 +157,11 @@ class ExtractFeaturesKaggle:
                 with Image.open(img_path) as im:
                     im.verify()
                 valid_indices.append(i)
-            except:
+            except Exception as e:
+                print("Exception: ", e)
                 bad_images += 1
         df = df.loc[valid_indices].reset_index(drop=True)
         print(f"Skipped {bad_images} corrupt images. Valid images: {len(df)}")
-
 
     def label_distributions(self, df: pd.DataFrame):
         """
@@ -257,7 +285,7 @@ class ExtractFeaturesKaggle:
         print("Train sentiment dist:", Counter(df_train["label_sentiment"].tolist()))
         return df_train, df_val, df_test
 
-    def DEBUG_label_distribution_check(self, df: pd.DataFrame,df_train: pd.DataFrame, df_val: pd.DataFrame, df_test: pd.DataFrame):
+    def DEBUG_label_distribution_check(self, df: pd.DataFrame, df_train: pd.DataFrame, df_val: pd.DataFrame, df_test: pd.DataFrame):
         # DEBUG — Check label distributions
         print("=== FULL DATASET ===")
         print(df["sentiment_3"].value_counts())
@@ -272,14 +300,28 @@ class ExtractFeaturesKaggle:
 # ----- BOOL Tests -----------------------------------------------
 
     def is_dataset_loaded_locally(self) -> bool:
+        """
+        Getter für die Zustandsvariable die nachprüft, ob das in load_and_save_dataset()
+        angelegte Überverzeichnis existiert
+
+        :return:
+        """
         return self._is_full_dataset_dir_existing
 
 ## ----- GETTER ------------------------------------------------------
 
-    def get_images_path(self):
+    def get_images_path(self) -> str:
+        """
+        gibt den kompletten Datenpfad zu /images zurück, beginnend bei Laufwerk C
+        :return:
+        """
         return os.path.join(search_memotion_dataset_7k_dir(), "images")
 
-    def get_labels_csv_path(self):
+    def get_labels_csv_path(self) -> str:
+        """
+        gibt den kompletten Datenpfad zu labels.csv zurück, beginnend bei Laufwerk C
+        :return:
+        """
         return os.path.join(search_memotion_dataset_7k_dir(), "labels.csv")
 
     def get_class_weights(self, labels, num_classes):
