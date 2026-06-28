@@ -12,7 +12,41 @@
 - [Notizen](#notizen)
 
 ## Setup
-tbd 
+
+Klonen des Repositorys:
+````shell
+git clone https://github.com/Bekky95/EMI_Projekt.git
+````
+
+Nach dem Klonen muss nur die `main.py` gestartet werden und das komplette Training wird ausgeführt.
+Beim Starten wird geprüft ob das Datenset bereits im Verzeichnis ist, wenn nicht, wird dieses heruntergeladen.
+Ansonsten wird das Datenset aus dem Verzeichnis `./data/dataset<Dataset_name_>` geladen. Es muss also kein Datenset manuell geladen werden
+
+Die Projektstruktur ist folgende:
+````Mermaid
+treeView-beta
+    "/data"
+        "/dataset"
+            "/williamscott701_memotion-dataset-7k_"
+                "<hier das Dataset>"
+        "/img"
+            "<Diverse Bilder für Readme>"
+    "/src"
+        "/helper"
+            "directory_functions.py"
+            "image_functions.py"
+            "sample_plotting.py"
+        "/methods"
+            "cross_attention.py"
+            "early_fusion.py"
+        "/models"
+            "early_fusion.py"
+            "miniLM_model.py"
+        "dataset.py"
+        "extract_features.py"
+        "train.py"
+    "main.py"
+````
 
 ## Ergebnistabelle
 tbd
@@ -79,7 +113,7 @@ Sie Ihre Ergebnisse im Code-Repository. \
 Ausführlich in [Section File](#aufgabenstellung-file)
 
 ### Todo Liste
-- [ ] Setup in Readme schreiben
+- [x] Setup in Readme schreiben
 - [ ] Ergebnistabelle in Readme schreiben
 - [ ] Diskussion in Readme schreiben
 - [ ] Dataset Klasse implementieren
