@@ -17,15 +17,11 @@ def is_dataset_dir_existing(dataset_dir_name: str) -> bool:
 
 
 def get_root() -> str:
-    # get project root
+    """get project root"""
+    project_name = "EMI_Projekt"
     cwd = os.getcwd()
-    cwd_len = len(cwd.split("src"))
-    root = ""
-
-    if cwd_len < 1:
-        root, _ = os.getcwd().split("src")
-    elif cwd_len == 1:
-        root = cwd
+    cwd_list = cwd.split(project_name)
+    root = os.path.join(cwd_list[0], project_name)
 
     return root
 
